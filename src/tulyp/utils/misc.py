@@ -2,7 +2,6 @@ import re
 import os
 import sys
 import dbus
-import psutil
 from pathlib import Path
 
 from tulyp.lyrics_sources import genius, google, azlyrics
@@ -29,21 +28,35 @@ def create_cache_path(seed: str) -> str:
 
 
 def get_dbus_interface(player: str) -> dbus.Interface:
-    try:
-        session_bus = dbus.SessionBus()
+    session_bus = dbus.SessionBus()
 
-        if player == "ncspot":
-            for proc in psutil.process_iter(['name', 'pid']):
-                if proc.info["name"] == player:
-                    player = f"{player}.instance{proc.info['pid']}"
+    try:
+        dbus_proxy = session_bus.get_object(
+            "org.freedesktop.DBus",
+            "/org/freedesktop/DBus"
+        )
+        dbus_iface = dbus.Interface(
+            dbus_proxy,
+            "org.freedesktop.DBus"
+        )
+
+        names = dbus_iface.ListNames()
+
+        # Find matching MPRIS service
+        target = None
+        for name in names:
+            if name.startswith("org.mpris.MediaPlayer2."):
+                if player in name:
+                    target = name
                     break
 
-        bus_name = f"org.mpris.MediaPlayer2.{player}"
-        obj_path = "/org/mpris/MediaPlayer2"
+        if not target:
+            print(f"{player} is not running (MPRIS not found)")
+            sys.exit()
 
-        bus = session_bus.get_object(bus_name=bus_name, object_path=obj_path)
+        obj = session_bus.get_object(target, "/org/mpris/MediaPlayer2")
 
-        return dbus.Interface(bus, "org.freedesktop.DBus.Properties")
+        return dbus.Interface(obj, "org.freedesktop.DBus.Properties")
 
     except dbus.DBusException:
         print(f"{player} is not running")
