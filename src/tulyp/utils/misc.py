@@ -44,9 +44,9 @@ def get_dbus_interface(player: str) -> dbus.Interface:
 
         # Find matching MPRIS service
         target = None
+        prefix = f"org.mpris.MediaPlayer2.{player}"
         for name in names:
-            if name.startswith("org.mpris.MediaPlayer2."):
-                if player in name:
+            if name.startswith(prefix):
                     target = name
                     break
 

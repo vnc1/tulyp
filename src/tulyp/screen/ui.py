@@ -58,7 +58,7 @@ class Screen(object):
                 else:
                     self.items = get_lyrics(title=title, artist=artist).splitlines()
             except LyricsNotFoundError:
-                self.items = ["no lyrics found"]
+                self.items = ["No lyrics found."]
             self.top = 0
             self.bottom = len(self.items)
 

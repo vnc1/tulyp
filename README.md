@@ -1,54 +1,51 @@
-# tulyp
+# tulyp (fork)
 
-![screenshot](https://raw.githubusercontent.com/laszloszurok/tulyp/main/images/screenshot.png)
+![screenshot](https://raw.githubusercontent.com/vnc1/tulyp/refs/heads/main/images/screenshot.png)
 
-`tulyp` displays the lyrics of the currently playing song in the terminal.
+`tulyp` is a program that displays the lyrics of the currently playing song in your terminal.
 It checks for lyrics from 3 sources (stops at the first successful result):
 
 * genius.com
 * google.com
 * azlyrics.com
 
-Tulyp only works with music players which are compliant with the [mpris](https://wiki.archlinux.org/title/MPRIS) specification (e.g. Spotify, ncspot).
-You can specify the player to use as a commandline argument: `tulyp spotify`.
-If no player is provided ncspot will be used.
+tulyp only works with music players which are compliant with the [MPRIS](https://wiki.archlinux.org/title/MPRIS) specification.
 
-Lyrics will be displayed in a curses window and you can use the arrow keys or j/k to scroll up and down.
+Lyrics are displayed in a curses window. You can use <kb>j</kb> and <kb>k</kb> or <kbd>↑</kbd> and <kbd>↓</kbd> to scroll one line at a time. You can also use the scroll wheel in terminal emulators that support it.
 
-Lyrics get saved under `XDG_CACHE_HOME/tulyp/artist-title` (default: `~/.cache/tulyp/artist-title`).
+Lyrics are saved to `XDG_CACHE_HOME/tulyp/artist-title` (default: `~/.cache/tulyp/artist-title`).
 If there are cached lyrics for a song, no queries will be executed.
 
-Tulyp continously checks what song is currently playing and automatically reloads itself, to show the appropriate lyrics.
+tulyp checks what song is playing and automatically reloads itself to show the appropriate lyrics.
 You can switch between lyrics sources with number keys:
 
-* 1 - genius
-* 2 - google
-* 3 - azlyrics
+* 1 - Genius
+* 2 - Google
+* 3 - AZlyrics
 
 ## Dependencies (they will be installed with `tulyp`)
 
-* `beautifulsoup4` to extract lyrics from html
+* `beautifulsoup4` to extract lyrics from HTML
 * `dbus-python` to get the currently playing song through dbus
 * `lyricsgenius` provides API to get lyrics from genius.com
-* `psutil` needed when using ncspot to get the pid of the ncspot process
-* `requests` to search for lyrincs on google
+* `requests` to search for lyrics on Google
 
-## Install
+Audio player detection now uses D-Bus (MPRIS) instead of `psutil`. As a result, `psutil` has been removed as a dependency.
 
-### From PyPi
-
-```shell
-pipx install tulyp
-```
-
-### From source
+## Installation
 
 ```shell
-git clone https://github.com/laszloszurok/tulyp.git
+git clone https://github.com/vnc1/tulyp.git
 cd tulyp
 python -m build
-pipx install dist/tulyp-0.0.3-py3-none-any.whl
+pipx install dist/*.whl
 ```
+
+## Use
+
+If there is only one application playing audio, running `tulyp` will automatically select it.
+Otherwise, specify which program you want. (eg: `tulyp cmus`, `tulyp spotify`, `tulyp resonance`...)
+
 
 ## Naming
 
@@ -56,4 +53,4 @@ pipx install dist/tulyp-0.0.3-py3-none-any.whl
 * we are dealing with lyrics       -> ly
 * the program is written in python -> p
 
-I am so good at naming things.
+laszloszurok is so good at naming things.

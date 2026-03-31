@@ -9,7 +9,7 @@ genius_api = None
 
 
 def init_genius_api():
-    """Initialize the genius API with an acces token.
+    """Initialize the genius API with an access token.
 
     The token can be provided through an environment variable called
     TULYP_GENIUS_TOKEN. If this env var is not set, a default token
@@ -18,7 +18,7 @@ def init_genius_api():
     global genius_api
 
     genius_token = os.getenv(
-        "TULYP_GENIUS_TOKEN", default="udS-ThnfpSvQIl5H-wCoKeXhydgLTdpsp1L-0_sW2VANeiWZbK5xvfTOTTnnUCz1"
+        "TULYP_GENIUS_TOKEN", default="0f1o22B6l50S2Oi8FpSC--nT2uko2mOuqMc1QZEhTTFiovDU2nHKik-1tcNBnWwu"
     )
 
     genius_api = lyricsgenius.Genius(genius_token)
