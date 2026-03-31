@@ -3,15 +3,11 @@
 ![screenshot](https://raw.githubusercontent.com/vnc1/tulyp/refs/heads/main/images/screenshot.png)
 
 `tulyp` is a program that displays the lyrics of the currently playing song in your terminal.
-It checks for lyrics from 3 sources (stops at the first successful result):
-
-* genius.com
-* google.com
-* azlyrics.com
+It checks for lyrics from 3 sources: genius.com, google.com, and azlyrics.com
 
 tulyp only works with music players which are compliant with the [MPRIS](https://wiki.archlinux.org/title/MPRIS) specification.
 
-Lyrics are displayed in a curses window. You can use <kb>j</kb> and <kb>k</kb> or <kbd>↑</kbd> and <kbd>↓</kbd> to scroll one line at a time. You can also use the scroll wheel in terminal emulators that support it.
+Lyrics are displayed in a curses window. You can use <kbd>j</kbd> and <kbd>k</kbd> or <kbd>↑</kbd> and <kbd>↓</kbd> to scroll one line at a time. You can also use the scroll wheel in terminal emulators that support it.
 
 Lyrics are saved to `XDG_CACHE_HOME/tulyp/artist-title` (default: `~/.cache/tulyp/artist-title`).
 If there are cached lyrics for a song, no queries will be executed.
